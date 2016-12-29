@@ -1,0 +1,6 @@
+*.vim
+*.o
+dpf
+*.d
+tags
+include/compile_time.h
