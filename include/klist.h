@@ -34,7 +34,7 @@ typedef unsigned long __u64__;
 /* The "volatile" is due to gcc bugs */
 #define barrier() __asm__ __volatile__("": : :"memory")
 
-static __always_inline void __write_once_size(volatile void *p, void *res, int size)
+static /*__always_inline*/ void __write_once_size(volatile void *p, void *res, int size)
 {
 	switch (size) {
 	case 1: *(volatile __u8 *)p = *(__u8 *)res; break;
@@ -84,6 +84,18 @@ static inline void list_add(struct list_head *new, struct list_head *head)
 
 #define LIST_HEAD(name) \
 	struct list_head name = LIST_HEAD_INIT(name)
+
+#if 0
+static inline void INIT_LIST_HEAD(struct list_head *list)
+{
+    list->next = list;
+    list->prev = list;
+}
+#else
+#define INIT_LIST_HEAD(ptr) do {\
+    (ptr)->next = (ptr); (ptr)->prev = (ptr); \
+} while (0)
+#endif
 
 #define container_of(ptr, type, member) ({			\
 		const typeof( ((type *)0)->member ) *__mptr = (ptr);	\
