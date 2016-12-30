@@ -5,6 +5,7 @@
 
 #include "display_ss.h"
 #include "input_ss.h"
+#include "encoding_ss.h"
 
 int main(int argc, char *argv[])
 {
@@ -30,5 +31,13 @@ int main(int argc, char *argv[])
     /* 调用所有输入设备的初始化函数 */
 	AllInputDevicesInit();
 
+    /* 注册编码模块 */
+    EncodingInit();
+
+    /* 注册字库模块 */
+	FontsInit();
+
+    /* 设置freetype字库所用的文件和字体尺寸 */
+	SetFontsDetail("freetype", argv[1], 24);
 	return 0;
 }

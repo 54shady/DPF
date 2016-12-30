@@ -14,7 +14,9 @@ export STRIP OBJCOPY OBJDUMP
 
 CFLAGS := -Wall -Werror -O2 -g
 CFLAGS += -I $(shell pwd)/include
-LDFLAGS := -lm -ljpeg -lts -lpthread
+FTLIB  	:= -L/home/zeroway/armlinux/freetype/freetypelibs/usr/local/lib
+CFLAGS  += -I/home/zeroway/armlinux/freetype/freetypelibs/usr/local/include
+LDFLAGS := -lm -ljpeg -lts -lpthread -lfreetype
 
 TOPDIR := $(shell pwd)
 
@@ -30,7 +32,7 @@ all :
 	echo "/* This file is auto generate */" > include/compile_time.h
 	echo "#define COMPILE_DATE \"$(shell date +%Y-%m-%d\ %H:%M)\" " >> include/compile_time.h
 	make -C ./ -f $(TOPDIR)/Makefile.build
-	$(CC) $(LDFLAGS) $(CFLAGS) -o $(TARGET) built-in.o
+	$(CC) $(LDFLAGS) $(CFLAGS) $(FTLIB) -o $(TARGET) built-in.o
 	ctags -R
 
 clean:

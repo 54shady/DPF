@@ -203,7 +203,6 @@ int AddFontOprForEncoding(PT_EncodingOpr ptEncodingOpr, PT_FontOpr ptFontOpr)
 
 int EncodingInit(void)
 {
-#if 0
 	int iError;
 
 	iError = AsciiEncodingInit();
@@ -212,6 +211,7 @@ int EncodingInit(void)
 		printf("AsciiEncodingInit error!\n");
 		return -1;
 	}
+#if 0
 
 	iError = Utf16leEncodingInit();
 	if (iError)

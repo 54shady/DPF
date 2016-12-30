@@ -93,8 +93,8 @@ int SetFontsDetail(char *pcFontsName, char *pcFontsFile, unsigned int dwFontSize
 
 int FontsInit(void)
 {
-#if 0
 	int iError;
+#if 0
 
 	iError = ASCIIInit();
 	if (iError)
@@ -111,7 +111,7 @@ int FontsInit(void)
 	}
 #endif
 
-#if 0
+#if 1
 	iError = FreeTypeInit();
 	if (iError)
 	{
