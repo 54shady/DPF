@@ -102,3 +102,15 @@ int AllInputDevicesInit(void)
 	}
 	return iError;
 }
+
+int GetInputEvent(PT_InputEvent ptInputEvent)
+{
+	/* 休眠 */
+	pthread_mutex_lock(&g_tMutex);
+	pthread_cond_wait(&g_tConVar, &g_tMutex);
+
+	/* 被唤醒后,返回数据 */
+	*ptInputEvent = g_tInputEvent;
+	pthread_mutex_unlock(&g_tMutex);
+	return 0;
+}

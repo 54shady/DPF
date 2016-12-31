@@ -239,3 +239,21 @@ int EncodingInit(void)
 	return 0;
 #endif
 }
+
+PT_EncodingOpr Encode(char *pcName)
+{
+	struct EncodingOpr *pModule;
+
+	list_for_each_entry(pModule, &encoding_list, list)
+	{
+		if (strcmp(pModule->name, pcName) == 0)
+			return pModule;
+	}
+
+	return NULL;
+}
+
+int GetCodeFrmBuf(unsigned char *pucBufStart, unsigned char *pucBufEnd, unsigned int *pdwCode)
+{
+    return Encode("utf-8")->GetCodeFrmBuf(pucBufStart, pucBufEnd, pdwCode);
+}

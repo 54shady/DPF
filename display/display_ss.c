@@ -188,3 +188,144 @@ int AllocVideoMem(int iNum)
 
 	return 0;
 }
+
+PT_VideoMem GetVideoMem(int iID, int bCur)
+{
+	struct VideoMem *pModule;
+
+	/* 1. 优先: 取出空闲的、ID相同的videomem */
+	list_for_each_entry(pModule, &videomem_list, list)
+	{
+		if ((pModule->eVideoMemState == VMS_FREE) && (pModule->iID == iID))
+		{
+			pModule->eVideoMemState = bCur ? VMS_USED_FOR_CUR : VMS_USED_FOR_PREPARE;
+			return pModule;
+		}
+	}
+
+	/* 2. 如果前面不成功, 取出一个空闲的并且里面没有数据(ptVideoMem->ePicState = PS_BLANK)的VideoMem */
+	list_for_each_entry(pModule, &videomem_list, list)
+	{
+		if ((pModule->eVideoMemState == VMS_FREE) && (pModule->ePicState == PS_BLANK))
+		{
+			pModule->iID = iID;
+			pModule->eVideoMemState = bCur ? VMS_USED_FOR_CUR : VMS_USED_FOR_PREPARE;
+			return pModule;
+		}
+	}
+
+	/* 3. 如果前面不成功: 取出任意一个空闲的VideoMem */
+	list_for_each_entry(pModule, &videomem_list, list)
+	{
+		if (pModule->eVideoMemState == VMS_FREE)
+		{
+			pModule->iID = iID;
+			pModule->ePicState = PS_BLANK;
+			pModule->eVideoMemState = bCur ? VMS_USED_FOR_CUR : VMS_USED_FOR_PREPARE;
+			return pModule;
+		}
+	}
+
+    /* 4. 如果没有空闲的VideoMem并且bCur为1, 则取出任意一个VideoMem(不管它是否空闲) */
+    if (bCur)
+    {
+		pModule = list_first_entry(&videomem_list, struct VideoMem, list);
+
+		pModule->iID = iID;
+		pModule->ePicState = PS_BLANK;
+		pModule->eVideoMemState = bCur ? VMS_USED_FOR_CUR : VMS_USED_FOR_PREPARE;
+		return pModule;
+    }
+
+	return NULL;
+}
+
+void PutVideoMem(PT_VideoMem ptVideoMem)
+{
+	ptVideoMem->eVideoMemState = VMS_FREE;  /* 设置VideoMem状态为空闲 */
+    if (ptVideoMem->iID == -1)
+    {
+        ptVideoMem->ePicState = PS_BLANK;  /* 表示里面的数据没有用了 */
+    }
+}
+
+PT_VideoMem GetDevVideoMem(void)
+{
+	struct VideoMem *pModule;
+
+	list_for_each_entry(pModule, &videomem_list, list)
+	{
+		if (pModule->bDevFrameBuffer)
+			return pModule;
+	}
+	return NULL;
+}
+
+void ClearVideoMem(PT_VideoMem ptVideoMem, unsigned int dwColor)
+{
+	unsigned char *pucVM;
+	unsigned short *pwVM16bpp;
+	unsigned int *pdwVM32bpp;
+	unsigned short wColor16bpp; /* 565 */
+	int iRed;
+	int iGreen;
+	int iBlue;
+	int i = 0;
+
+	pucVM	   = ptVideoMem->tPixelDatas.aucPixelDatas;
+	pwVM16bpp  = (unsigned short *)pucVM;
+	pdwVM32bpp = (unsigned int *)pucVM;
+
+	switch (ptVideoMem->tPixelDatas.iBpp)
+	{
+		case 8:
+		{
+			memset(pucVM, dwColor, ptVideoMem->tPixelDatas.iTotalBytes);
+			break;
+		}
+		case 16:
+		{
+			/* 先根据32位的dwColor构造出16位的wColor16bpp */
+			iRed   = (dwColor >> (16+3)) & 0x1f;
+			iGreen = (dwColor >> (8+2)) & 0x3f;
+			iBlue  = (dwColor >> 3) & 0x1f;
+			wColor16bpp = (iRed << 11) | (iGreen << 5) | iBlue;
+			while (i < ptVideoMem->tPixelDatas.iTotalBytes)
+			{
+				*pwVM16bpp	= wColor16bpp;
+				pwVM16bpp++;
+				i += 2;
+			}
+			break;
+		}
+		case 32:
+		{
+			while (i < ptVideoMem->tPixelDatas.iTotalBytes)
+			{
+				*pdwVM32bpp = dwColor;
+				pdwVM32bpp++;
+				i += 4;
+			}
+			break;
+		}
+		default :
+		{
+			printf("can't support %d bpp\n", ptVideoMem->tPixelDatas.iBpp);
+			return;
+		}
+	}
+
+}
+
+PT_DispOpr GetDefaultDispDev(void)
+{
+	struct DispOpr *pModule;
+
+	list_for_each_entry(pModule, &display_list, list)
+	{
+		if (pModule->use_as_default)
+			return pModule;
+	}
+
+	return NULL;
+}

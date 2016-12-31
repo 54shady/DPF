@@ -43,7 +43,7 @@ typedef struct VideoMem {
 	struct list_head list;
 }T_VideoMem, *PT_VideoMem;
 
-struct DispOpr {
+typedef struct DispOpr {
 	/* variables */
 	char *name;
 	int iXres;
@@ -68,7 +68,7 @@ struct DispOpr {
 	struct fb_fix_screeninfo fb_fix;
 
 	struct list_head list;
-};
+}T_DispOpr, *PT_DispOpr;
 
 int display_register(struct list_head *list);
 int fb_init(void);
@@ -81,4 +81,8 @@ void SelectAndInitDefaultDispDev(const char *name);
 void FlushPixelDatasToDev(PT_PixelDatas ptPixelDatas);
 int AllocVideoMem(int iNum);
 
+PT_VideoMem GetVideoMem(int iID, int bCur);
+void PutVideoMem(PT_VideoMem ptVideoMem);
+void ClearVideoMem(PT_VideoMem ptVideoMem, unsigned int dwColor);
+struct DispOpr *GetDefaultDispDev(void);
 #endif

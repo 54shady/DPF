@@ -43,5 +43,12 @@ int main(int argc, char *argv[])
 
     /* 注册图片文件解析模块 */
     PicFmtsInit();
+
+    /* 注册页面 */
+	PagesInit();
+
+    /* 运行主页面 */
+	Page("main")->Run(NULL);
+
 	return 0;
 }

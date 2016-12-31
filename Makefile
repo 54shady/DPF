@@ -28,6 +28,8 @@ obj-y += input/
 obj-y += encoding/
 obj-y += font/
 obj-y += picfmt/
+obj-y += page/
+obj-y += utils/
 
 all :
 	echo "/* This file is auto generate */" > include/compile_time.h

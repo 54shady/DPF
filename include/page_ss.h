@@ -3,6 +3,7 @@
 
 #include "input_ss.h"
 #include "display_ss.h"
+#include "klist.h"
 
 typedef struct PageParams {
     int iPageID;                  /* 页面的ID */
@@ -24,7 +25,8 @@ typedef struct PageAction {
 	void (*Run)(PT_PageParams ptParentPageParams);  /* 页面的运行函数 */
 	int (*GetInputEvent)(PT_PageLayout ptPageLayout, PT_InputEvent ptInputEvent);  /* 获得输入数据的函数 */
 	int (*Prepare)(void);         /* (未实现)后台准备函数: 为加快程序运行而同时处理某些事情 */
-	struct PageAction *ptNext;    /* 链表 */
+	//struct PageAction *ptNext;    /* 链表 */
+	struct list_head list;
 }T_PageAction, *PT_PageAction;
 
 /* 页面配置信息 */
@@ -43,7 +45,7 @@ int IntervalPageInit(void);
 int BrowsePageInit(void);
 int AutoPageInit(void);
 int ManualPageInit(void);
-int RegisterPageAction(PT_PageAction ptPageAction);
+int RegisterPageAction(struct list_head *list);
 int PagesInit(void);
 int GeneratePage(PT_PageLayout ptPageLayout, PT_VideoMem ptVideoMem);
 int GenericGetInputEvent(PT_PageLayout ptPageLayout, PT_InputEvent ptInputEvent);

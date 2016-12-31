@@ -35,5 +35,5 @@ int input_register(struct list_head *list);
 int AllInputDevicesInit(void);
 int StdinInit(void);
 int TouchScreenInit(void);
-
+int GetInputEvent(PT_InputEvent ptInputEvent);
 #endif
