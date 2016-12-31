@@ -6,6 +6,7 @@
 #include "display_ss.h"
 #include "input_ss.h"
 #include "encoding_ss.h"
+#include "picfmt_ss.h"
 
 int main(int argc, char *argv[])
 {
@@ -39,5 +40,8 @@ int main(int argc, char *argv[])
 
     /* 设置freetype字库所用的文件和字体尺寸 */
 	SetFontsDetail("freetype", argv[1], 24);
+
+    /* 注册图片文件解析模块 */
+    PicFmtsInit();
 	return 0;
 }

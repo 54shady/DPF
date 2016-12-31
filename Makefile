@@ -27,6 +27,7 @@ obj-y += display/
 obj-y += input/
 obj-y += encoding/
 obj-y += font/
+obj-y += picfmt/
 
 all :
 	echo "/* This file is auto generate */" > include/compile_time.h

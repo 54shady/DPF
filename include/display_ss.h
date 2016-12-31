@@ -5,6 +5,17 @@
 #include "klist.h"
 #include "pic_operation.h"
 
+/* 显示区域,含该区域的左上角/右下角座标
+ * 如果是图标,还含有图标的文件名
+ */
+typedef struct Layout {
+	int iTopLeftX;
+	int iTopLeftY;
+	int iBotRightX;
+	int iBotRightY;
+	char *strIconName;
+}T_Layout, *PT_Layout;
+
 /* VideoMem中内存里图片的状态:
  * 空白/正在生成/已经生成
  */
