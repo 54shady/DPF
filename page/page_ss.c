@@ -6,11 +6,13 @@
 #include "page_ss.h"
 #include "render.h"
 #include "input_ss.h"
-
-#define COLOR_BACKGROUND   0xE7DBB5  /* 刑仔議崕 */
+#include "config_dpf.h"
 
 /* 将该子系统里所有模块都装入链表 */
 LIST_HEAD(page_list);
+
+extern void GetSelectedDir(char *strSeletedDir);
+extern void GetIntervalTime(int *piIntervalSecond);
 
 /* 开放给底层具体模块的注册接口 */
 int RegisterPageAction(struct list_head *list)
@@ -28,7 +30,7 @@ int PagesInit(void)
 	iError |= SettingPageInit();
 	iError |= IntervalPageInit();
 	iError |= BrowsePageInit();
-    //iError |= AutoPageInit();
+    iError |= AutoPageInit();
     //iError |= ManualPageInit();
 	return iError;
 }
@@ -155,6 +157,12 @@ int TimeMSBetween(struct timeval tTimeStart, struct timeval tTimeEnd)
 	int iMS;
 	iMS = (tTimeEnd.tv_sec - tTimeStart.tv_sec) * 1000 + (tTimeEnd.tv_usec - tTimeStart.tv_usec) / 1000;
 	return iMS;
+}
+
+void GetPageCfg(PT_PageCfg ptPageCfg)
+{
+    GetSelectedDir(ptPageCfg->strSeletedDir);
+    GetIntervalTime(&ptPageCfg->iIntervalSecond);
 }
 
 void ShowPageModules(void)

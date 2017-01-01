@@ -5,9 +5,8 @@
 #include "render.h"
 #include "file_ss.h"
 #include "font_ss.h"
+#include "config_dpf.h"
 
-
-#define COLOR_BACKGROUND   0xE7DBB5
 /* 图标是一个正方体, "图标+名字"也是一个正方体
  *   --------
  *   |  图  |
@@ -64,8 +63,6 @@ static PT_DirContent *g_aptDirContents;  /* 数组:存有目录下"顶层子目�
 static int g_iDirContentsNumber;         /* g_aptDirContents数组有多少项 */
 static int g_iStartIndex = 0;            /* 在屏幕上显示的第1个"目录和文件"是g_aptDirContents数组里的哪一项 */
 
-/* 当前显示的目录 */
-#define DEFAULT_DIR "/"
 static char g_strCurDir[256] = DEFAULT_DIR;
 static char g_strSelectedDir[256] = DEFAULT_DIR;
 
