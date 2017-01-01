@@ -75,8 +75,8 @@ int AsciiEncodingInit(void)
 {
 	INIT_LIST_HEAD(&g_tAsciiEncodingOpr.ptFontOprSupportedHead);
 	AddFontOprForEncoding(&g_tAsciiEncodingOpr, GetFontOpr("freetype"));
-	AddFontOprForEncoding(&g_tAsciiEncodingOpr, GetFontOpr("ascii"));
-	AddFontOprForEncoding(&g_tAsciiEncodingOpr, GetFontOpr("gbk"));
+	//AddFontOprForEncoding(&g_tAsciiEncodingOpr, GetFontOpr("ascii"));
+	//AddFontOprForEncoding(&g_tAsciiEncodingOpr, GetFontOpr("gbk"));
 	return RegisterEncodingOpr(&g_tAsciiEncodingOpr.list);
 }
 

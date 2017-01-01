@@ -39,7 +39,7 @@ struct DispOpr *display_get_module(const char *name)
 			return pModule;
 	}
 
-	printf("no sub module ERROR\n");
+	printf("%s, %d, no sub module ERROR\n", __FUNCTION__, __LINE__);
 	return NULL;
 }
 
@@ -53,7 +53,7 @@ static struct DispOpr *get_default_module(void)
 			return pModule;
 	}
 
-	printf("no sub module ERROR\n");
+	printf("%s, %d, no sub module ERROR\n", __FUNCTION__, __LINE__);
 	return NULL;
 
 }
@@ -328,4 +328,12 @@ PT_DispOpr GetDefaultDispDev(void)
 	}
 
 	return NULL;
+}
+
+void show_disp_modules(void)
+{
+	struct DispOpr *pModule;
+
+	list_for_each_entry(pModule, &display_list, list)
+		printf("%s\n", pModule->name);
 }

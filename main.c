@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
 	/* 可能支持多个显示设备: 选择和初始化指定的显示设备 */
 	SelectAndInitDefaultDispDev("fb");
 	display_modules_init();
+	//show_disp_modules();
 
 	/*
 	 * VideoMem: 为加快显示速度,我们事先在内存中构造好显示的页面的数据,
@@ -32,11 +33,11 @@ int main(int argc, char *argv[])
     /* 调用所有输入设备的初始化函数 */
 	AllInputDevicesInit();
 
-    /* 注册编码模块 */
-    EncodingInit();
-
     /* 注册字库模块 */
 	FontsInit();
+
+    /* 注册编码模块 */
+    EncodingInit();
 
     /* 设置freetype字库所用的文件和字体尺寸 */
 	SetFontsDetail("freetype", argv[1], 24);

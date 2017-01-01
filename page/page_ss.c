@@ -43,7 +43,7 @@ PT_PageAction Page(char *name)
 			return pModule;
 	}
 
-	printf("no sub module ERROR\n");
+	printf("%s, %d, no sub module ERROR\n", __FUNCTION__, __LINE__);
 	return NULL;
 }
 
