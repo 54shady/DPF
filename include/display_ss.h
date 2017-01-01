@@ -86,4 +86,5 @@ void PutVideoMem(PT_VideoMem ptVideoMem);
 void ClearVideoMem(PT_VideoMem ptVideoMem, unsigned int dwColor);
 struct DispOpr *GetDefaultDispDev(void);
 void ShowDispModules(void);
+PT_VideoMem GetDevVideoMem(void);
 #endif

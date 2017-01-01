@@ -27,7 +27,7 @@ int PagesInit(void)
 	iError  = MainPageInit();
 	iError |= SettingPageInit();
 	//iError |= IntervalPageInit();
-	//iError |= BrowsePageInit();
+	iError |= BrowsePageInit();
     //iError |= AutoPageInit();
     //iError |= ManualPageInit();
 	return iError;
@@ -148,4 +148,11 @@ int GenericGetInputEvent(PT_PageLayout ptPageLayout, PT_InputEvent ptInputEvent)
 
 	/* 触点没有落在按钮上 */
 	return -1;
+}
+
+int TimeMSBetween(struct timeval tTimeStart, struct timeval tTimeEnd)
+{
+	int iMS;
+	iMS = (tTimeEnd.tv_sec - tTimeStart.tv_sec) * 1000 + (tTimeEnd.tv_usec - tTimeStart.tv_usec) / 1000;
+	return iMS;
 }
