@@ -99,7 +99,7 @@ void FlushPixelDatasToDev(PT_PixelDatas ptPixelDatas)
 
 	pModule = get_default_module();
 
-    pModule->ShowPage(pModule, ptPixelDatas);
+	pModule->ShowPage(pModule, ptPixelDatas);
 }
 
 int AllocVideoMem(int iNum)
@@ -117,7 +117,7 @@ int AllocVideoMem(int iNum)
 	PT_VideoMem ptNew;
 
 	/* 确定VideoMem的大小
-	 */
+	*/
 	GetDispResolution(&iXres, &iYres, &iBpp);
 	iVMSize = iXres * iYres * iBpp / 8;
 	iLineBytes = iXres * iBpp / 8;
@@ -226,16 +226,16 @@ PT_VideoMem GetVideoMem(int iID, int bCur)
 		}
 	}
 
-    /* 4. 如果没有空闲的VideoMem并且bCur为1, 则取出任意一个VideoMem(不管它是否空闲) */
-    if (bCur)
-    {
+	/* 4. 如果没有空闲的VideoMem并且bCur为1, 则取出任意一个VideoMem(不管它是否空闲) */
+	if (bCur)
+	{
 		pModule = list_first_entry(&videomem_list, struct VideoMem, list);
 
 		pModule->iID = iID;
 		pModule->ePicState = PS_BLANK;
 		pModule->eVideoMemState = bCur ? VMS_USED_FOR_CUR : VMS_USED_FOR_PREPARE;
 		return pModule;
-    }
+	}
 
 	return NULL;
 }
@@ -243,10 +243,10 @@ PT_VideoMem GetVideoMem(int iID, int bCur)
 void PutVideoMem(PT_VideoMem ptVideoMem)
 {
 	ptVideoMem->eVideoMemState = VMS_FREE;  /* 设置VideoMem状态为空闲 */
-    if (ptVideoMem->iID == -1)
-    {
-        ptVideoMem->ePicState = PS_BLANK;  /* 表示里面的数据没有用了 */
-    }
+	if (ptVideoMem->iID == -1)
+	{
+		ptVideoMem->ePicState = PS_BLANK;  /* 表示里面的数据没有用了 */
+	}
 }
 
 PT_VideoMem GetDevVideoMem(void)
@@ -279,40 +279,40 @@ void ClearVideoMem(PT_VideoMem ptVideoMem, unsigned int dwColor)
 	switch (ptVideoMem->tPixelDatas.iBpp)
 	{
 		case 8:
-		{
-			memset(pucVM, dwColor, ptVideoMem->tPixelDatas.iTotalBytes);
-			break;
-		}
+			{
+				memset(pucVM, dwColor, ptVideoMem->tPixelDatas.iTotalBytes);
+				break;
+			}
 		case 16:
-		{
-			/* 先根据32位的dwColor构造出16位的wColor16bpp */
-			iRed   = (dwColor >> (16+3)) & 0x1f;
-			iGreen = (dwColor >> (8+2)) & 0x3f;
-			iBlue  = (dwColor >> 3) & 0x1f;
-			wColor16bpp = (iRed << 11) | (iGreen << 5) | iBlue;
-			while (i < ptVideoMem->tPixelDatas.iTotalBytes)
 			{
-				*pwVM16bpp	= wColor16bpp;
-				pwVM16bpp++;
-				i += 2;
+				/* 先根据32位的dwColor构造出16位的wColor16bpp */
+				iRed   = (dwColor >> (16+3)) & 0x1f;
+				iGreen = (dwColor >> (8+2)) & 0x3f;
+				iBlue  = (dwColor >> 3) & 0x1f;
+				wColor16bpp = (iRed << 11) | (iGreen << 5) | iBlue;
+				while (i < ptVideoMem->tPixelDatas.iTotalBytes)
+				{
+					*pwVM16bpp	= wColor16bpp;
+					pwVM16bpp++;
+					i += 2;
+				}
+				break;
 			}
-			break;
-		}
 		case 32:
-		{
-			while (i < ptVideoMem->tPixelDatas.iTotalBytes)
 			{
-				*pdwVM32bpp = dwColor;
-				pdwVM32bpp++;
-				i += 4;
+				while (i < ptVideoMem->tPixelDatas.iTotalBytes)
+				{
+					*pdwVM32bpp = dwColor;
+					pdwVM32bpp++;
+					i += 4;
+				}
+				break;
 			}
-			break;
-		}
 		default :
-		{
-			printf("can't support %d bpp\n", ptVideoMem->tPixelDatas.iBpp);
-			return;
-		}
+			{
+				printf("can't support %d bpp\n", ptVideoMem->tPixelDatas.iBpp);
+				return;
+			}
 	}
 
 }
@@ -328,6 +328,77 @@ PT_DispOpr GetDefaultDispDev(void)
 	}
 
 	return NULL;
+}
+
+void ClearVideoMemRegion(PT_VideoMem ptVideoMem, PT_Layout ptLayout, unsigned int dwColor)
+{
+	unsigned char *pucVM;
+	unsigned short *pwVM16bpp;
+	unsigned int *pdwVM32bpp;
+	unsigned short wColor16bpp; /* 565 */
+	int iRed;
+	int iGreen;
+	int iBlue;
+	int iX;
+	int iY;
+	int iLineBytesClear;
+	int i;
+
+	pucVM	   = ptVideoMem->tPixelDatas.aucPixelDatas + ptLayout->iTopLeftY * ptVideoMem->tPixelDatas.iLineBytes + ptLayout->iTopLeftX * ptVideoMem->tPixelDatas.iBpp / 8;
+	pwVM16bpp  = (unsigned short *)pucVM;
+	pdwVM32bpp = (unsigned int *)pucVM;
+
+	iLineBytesClear = (ptLayout->iBotRightX - ptLayout->iTopLeftX + 1) * ptVideoMem->tPixelDatas.iBpp / 8;
+
+	switch (ptVideoMem->tPixelDatas.iBpp)
+	{
+		case 8:
+			{
+				for (iY = ptLayout->iTopLeftY; iY <= ptLayout->iBotRightY; iY++)
+				{
+					memset(pucVM, dwColor, iLineBytesClear);
+					pucVM += ptVideoMem->tPixelDatas.iLineBytes;
+				}
+				break;
+			}
+		case 16:
+			{
+				/* 先根据32位的dwColor构造出16位的wColor16bpp */
+				iRed   = (dwColor >> (16+3)) & 0x1f;
+				iGreen = (dwColor >> (8+2)) & 0x3f;
+				iBlue  = (dwColor >> 3) & 0x1f;
+				wColor16bpp = (iRed << 11) | (iGreen << 5) | iBlue;
+				for (iY = ptLayout->iTopLeftY; iY <= ptLayout->iBotRightY; iY++)
+				{
+					i = 0;
+					for (iX = ptLayout->iTopLeftX; iX <= ptLayout->iBotRightX; iX++)
+					{
+						pwVM16bpp[i++]	= wColor16bpp;
+					}
+					pwVM16bpp = (unsigned short *)((unsigned int)pwVM16bpp + ptVideoMem->tPixelDatas.iLineBytes);
+				}
+				break;
+			}
+		case 32:
+			{
+				for (iY = ptLayout->iTopLeftY; iY <= ptLayout->iBotRightY; iY++)
+				{
+					i = 0;
+					for (iX = ptLayout->iTopLeftX; iX <= ptLayout->iBotRightX; iX++)
+					{
+						pdwVM32bpp[i++]	= dwColor;
+					}
+					pdwVM32bpp = (unsigned int *)((unsigned int)pdwVM32bpp + ptVideoMem->tPixelDatas.iLineBytes);
+				}
+				break;
+			}
+		default :
+			{
+				printf("can't support %d bpp\n", ptVideoMem->tPixelDatas.iBpp);
+				return;
+			}
+	}
+
 }
 
 void ShowDispModules(void)

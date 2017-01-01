@@ -31,7 +31,7 @@ int PagesInit(void)
 	iError |= IntervalPageInit();
 	iError |= BrowsePageInit();
     iError |= AutoPageInit();
-    //iError |= ManualPageInit();
+    iError |= ManualPageInit();
 	return iError;
 }
 
