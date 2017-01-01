@@ -257,3 +257,11 @@ int GetCodeFrmBuf(unsigned char *pucBufStart, unsigned char *pucBufEnd, unsigned
 {
     return Encode("utf-8")->GetCodeFrmBuf(pucBufStart, pucBufEnd, pdwCode);
 }
+
+void ShowEncodingModules(void)
+{
+	struct EncodingOpr *pModule;
+
+	list_for_each_entry(pModule, &encoding_list, list)
+		printf("%s module registered\n", pModule->name);
+}

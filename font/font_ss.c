@@ -113,3 +113,10 @@ int FontsInit(void)
 	return 0;
 }
 
+void ShowFontModules(void)
+{
+	struct FontOpr *pModule;
+
+	list_for_each_entry(pModule, &font_list, list)
+		printf("%s module registered\n", pModule->name);
+}

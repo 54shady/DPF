@@ -114,3 +114,11 @@ int GetInputEvent(PT_InputEvent ptInputEvent)
 	pthread_mutex_unlock(&g_tMutex);
 	return 0;
 }
+
+void ShowInputModules(void)
+{
+	struct InputOpr *pModule;
+
+	list_for_each_entry(pModule, &input_list, list)
+		printf("%s module registered\n", pModule->name);
+}

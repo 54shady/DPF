@@ -36,4 +36,5 @@ int AllInputDevicesInit(void);
 int StdinInit(void);
 int TouchScreenInit(void);
 int GetInputEvent(PT_InputEvent ptInputEvent);
+void ShowInputModules(void);
 #endif

@@ -330,10 +330,10 @@ PT_DispOpr GetDefaultDispDev(void)
 	return NULL;
 }
 
-void show_disp_modules(void)
+void ShowDispModules(void)
 {
 	struct DispOpr *pModule;
 
 	list_for_each_entry(pModule, &display_list, list)
-		printf("%s\n", pModule->name);
+		printf("%s module registered\n", pModule->name);
 }

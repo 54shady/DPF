@@ -39,5 +39,6 @@ int  Utf16leEncodingInit(void);
 int  Utf8EncodingInit(void);
 
 int GetCodeFrmBuf(unsigned char *pucBufStart, unsigned char *pucBufEnd, unsigned int *pdwCode);
+void ShowEncodingModules(void);
 
 #endif /* _ENCODING_MANAGER_H */

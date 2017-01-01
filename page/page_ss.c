@@ -25,7 +25,7 @@ int PagesInit(void)
 	int iError;
 
 	iError  = MainPageInit();
-	//iError |= SettingPageInit();
+	iError |= SettingPageInit();
 	//iError |= IntervalPageInit();
 	//iError |= BrowsePageInit();
     //iError |= AutoPageInit();
