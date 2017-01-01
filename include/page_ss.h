@@ -52,5 +52,6 @@ int GenericGetInputEvent(PT_PageLayout ptPageLayout, PT_InputEvent ptInputEvent)
 PT_PageAction Page(char *pcName);
 int TimeMSBetween(struct timeval tTimeStart, struct timeval tTimeEnd);
 void GetPageCfg(PT_PageCfg ptPageCfg);
+void ShowPageModules(void);
 
 #endif /* _PAGE_MANAGER_H */

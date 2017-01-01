@@ -21,7 +21,7 @@ int PicFmtsInit(void)
 	int iError;
 
 	iError = BMPParserInit();
-	//iError |= JPGParserInit();
+	iError |= JPGParserInit();
 
 	return iError;
 }
@@ -57,5 +57,5 @@ void ShowPicFmts(void)
 	struct PicFileParser *pModule;
 
 	list_for_each_entry(pModule, &picfmt_list, list)
-		printf("%s\n", pModule->name);
+		printf("%s module registered\n", pModule->name);
 }

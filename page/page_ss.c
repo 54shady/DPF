@@ -156,3 +156,11 @@ int TimeMSBetween(struct timeval tTimeStart, struct timeval tTimeEnd)
 	iMS = (tTimeEnd.tv_sec - tTimeStart.tv_sec) * 1000 + (tTimeEnd.tv_usec - tTimeStart.tv_usec) / 1000;
 	return iMS;
 }
+
+void ShowPageModules(void)
+{
+	struct PageAction *pModule;
+
+	list_for_each_entry(pModule, &page_list, list)
+		printf("%s module registered\n", pModule->name);
+}
