@@ -18,24 +18,55 @@ subgraph cluster_1 {
 	node [shape = "Mrecord", style = "filled"];
 	display;
 	encoding;
+	page;
+	utils;
+	picfmt;
 	font;
 	input;
-	page;
-	picfmt;
-	utils;
 }
 
 subgraph cluster_2 {
 	label = "modules";
 	node [shape = "Mrecord", color = "skyblue", style = "filled"];
-	fb;
-	bmp;
-	jpg;
-	touchscreen;
-	freetype;
-	utf;
-	ascii;
-	pages;
+	subgraph cluster_21 {
+		label = "display";
+		node [shape = "Mrecord", color = "skyblue", style = "filled"];
+		fb;
+	}
+	subgraph cluster_22 {
+		label = "picfmt";
+		node [shape = "Mrecord", color = "skyblue", style = "filled"];
+		bmp;
+		jpg;
+	}
+	subgraph cluster_23 {
+		label = "input";
+		node [shape = "Mrecord", color = "skyblue", style = "filled"];
+		touchscreen;
+	}
+	subgraph cluster_24 {
+		label = "font";
+		node [shape = "Mrecord", color = "skyblue", style = "filled"];
+		freetype;
+	}
+	subgraph cluster_25 {
+		label = "encoding";
+		node [shape = "Mrecord", color = "skyblue", style = "filled"];
+		utf8;
+		utf16le;
+		utf16be;
+		ascii;
+	}
+	subgraph cluster_26 {
+		label = "page";
+		node [shape = "Mrecord", color = "skyblue", style = "filled"];
+		Main;
+		Browse;
+		Auto;
+		Setting;
+		Interval;
+		Manual;
+	}
 }
 
 main -> display;
@@ -55,10 +86,17 @@ picfmt -> jpg [dir = both];
 
 input -> touchscreen [dir = both];
 
-encoding -> utf [dir = both];
 encoding -> ascii [dir = both];
+encoding -> utf8 [dir = both];
+encoding -> utf16le [dir = both];
+encoding -> utf16be [dir = both];
 
-page -> pages [dir = both];
+page -> Main [dir = both];
+page -> Setting [dir = both];
+page -> Browse [dir = both];
+page -> Manual [dir = both];
+page -> Auto [dir = both];
+page -> Interval [dir = both];
 
 "Digital Photo Frame" [shape = "plaintext"];
 }
