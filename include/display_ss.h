@@ -76,7 +76,7 @@ int fb_init(void);
 /* call for app */
 int DisplayInit(void);
 int GetDispResolution(int *piXres, int *piYres, int *piBpp);
-void display_modules_init(void);
+void DisplayModuleInit(void);
 void SelectAndInitDefaultDispDev(const char *name);
 void FlushPixelDatasToDev(PT_PixelDatas ptPixelDatas);
 int AllocVideoMem(int iNum);

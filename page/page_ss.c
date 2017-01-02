@@ -32,10 +32,11 @@ int PagesInit(void)
 	iError |= BrowsePageInit();
     iError |= AutoPageInit();
     iError |= ManualPageInit();
+
 	return iError;
 }
 
-PT_PageAction Page(char *name)
+static PT_PageAction Page(const char *name)
 {
 	struct PageAction *pModule;
 
@@ -174,4 +175,11 @@ void ShowPageModules(void)
 
 	list_for_each_entry(pModule, &page_list, list)
 		printf("%s module registered\n", pModule->name);
+}
+
+void RunPage(const char *name, PT_PageParams ptParentPageParams)
+{
+	struct PageAction *pModule;
+	pModule = Page(name);
+	pModule->Run(ptParentPageParams);
 }

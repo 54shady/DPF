@@ -168,8 +168,8 @@ int GetDirContents(char *strDirName, PT_DirContent **pptDirContents, int *piNumb
 		{
 			namelen = strlen(aptNameList[i]->d_name);
 			last3char = aptNameList[i]->d_name + namelen - 4;
-			printf("name = %s, len = %d\n", aptNameList[i]->d_name, namelen);
-			printf("last3 = %s\n", last3char);
+			//printf("name = %s, len = %d\n", aptNameList[i]->d_name, namelen);
+			//printf("last3 = %s\n", last3char);
 			strncpy(aptDirContents[j]->strName, aptNameList[i]->d_name, 256);
 			aptDirContents[j]->strName[255] = '\0';
 			aptDirContents[j]->eFileType    = FILETYPE_FILE;

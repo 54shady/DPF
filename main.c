@@ -7,9 +7,11 @@
 #include "input_ss.h"
 #include "encoding_ss.h"
 #include "picfmt_ss.h"
+#include "compile_time.h"
 
 int main(int argc, char *argv[])
 {
+	printf("DPF version 1.0 %s\n", COMPILE_DATE);
 	if (argc != 2)
 	{
 		printf("Usage:\n");
@@ -22,7 +24,7 @@ int main(int argc, char *argv[])
 
 	/* 可能支持多个显示设备: 选择和初始化指定的显示设备 */
 	SelectAndInitDefaultDispDev("fb");
-	display_modules_init();
+	DisplayModuleInit();
 	ShowDispModules();
 
 	/*
@@ -61,7 +63,7 @@ int main(int argc, char *argv[])
 	ShowPageModules();
 
     /* 运行主页面 */
-	Page("main")->Run(NULL);
+	RunPage("main", NULL);
 
 	return 0;
 }

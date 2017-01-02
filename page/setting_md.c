@@ -158,13 +158,13 @@ static void SettingPageRun(PT_PageParams ptParentPageParams)
                              * 0 - 用于观看图片
                              * 1 - 用于浏览/选择文件夹, 点击文件无反应
                              */
-							Page("browse")->Run(&tPageParams);
+							RunPage("browse", &tPageParams);
 							ShowSettingPage(&g_tSettingPageLayout);
 							break;
 						}
 						case 1: /* interval按钮 */
 						{
-							Page("interval")->Run(&tPageParams);
+							RunPage("interval", &tPageParams);
 							ShowSettingPage(&g_tSettingPageLayout);
 							break;
 						}
@@ -210,4 +210,3 @@ int SettingPageInit(void)
 {
 	return RegisterPageAction(&g_tSettingPageAction.list);
 }
-

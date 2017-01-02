@@ -49,9 +49,9 @@ int RegisterPageAction(struct list_head *list);
 int PagesInit(void);
 int GeneratePage(PT_PageLayout ptPageLayout, PT_VideoMem ptVideoMem);
 int GenericGetInputEvent(PT_PageLayout ptPageLayout, PT_InputEvent ptInputEvent);
-PT_PageAction Page(char *pcName);
 int TimeMSBetween(struct timeval tTimeStart, struct timeval tTimeEnd);
 void GetPageCfg(PT_PageCfg ptPageCfg);
 void ShowPageModules(void);
+void RunPage(const char *name, PT_PageParams ptParentPageParams);
 
 #endif /* _PAGE_MANAGER_H */

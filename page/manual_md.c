@@ -563,7 +563,7 @@ static void ManualPageRun(PT_PageParams ptParentPageParams)
 								if (ptParentPageParams->iPageID == ID("browse"))  /* 触发自"浏览页面" */
 								{
 									strcpy(tPageParams.strCurPictureFile, strFullPathName);
-									Page("auto")->Run(&tPageParams);
+									RunPage("auto", &tPageParams);
 									ShowManualPage(&g_tManualPageMenuIconsLayout, tPageParams.strCurPictureFile);
 								}
 								else /* 当前manual页面的父页面是auto页面, 直接返回即可 */

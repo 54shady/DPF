@@ -850,7 +850,7 @@ static void BrowsePageRun(PT_PageParams ptParentPageParams)
                             if (isPictureFileSupported(tPageParams.strCurPictureFile))
                             {
                                 tPageParams.iPageID = ID("browse");
-                                Page("manual")->Run(&tPageParams);
+                                RunPage("manual", &tPageParams);
                                 ShowBrowsePage(&g_tBrowsePageMenuIconsLayout);
                             }
                         }

@@ -29,20 +29,6 @@ int DisplayInit(void)
 	return iError;
 }
 
-struct DispOpr *display_get_module(const char *name)
-{
-	struct DispOpr *pModule;
-
-	list_for_each_entry(pModule, &display_list, list)
-	{
-		if (!strcmp(name, pModule->name))
-			return pModule;
-	}
-
-	printf("%s, %d, no sub module ERROR\n", __FUNCTION__, __LINE__);
-	return NULL;
-}
-
 static struct DispOpr *get_default_module(void)
 {
 	struct DispOpr *pModule;
@@ -70,7 +56,7 @@ int GetDispResolution(int *piXres, int *piYres, int *piBpp)
 }
 
 /* 调用各个子模块的初始化函数 */
-void display_modules_init(void)
+void DisplayModuleInit(void)
 {
 	struct DispOpr *pModule;
 
@@ -98,7 +84,6 @@ void FlushPixelDatasToDev(PT_PixelDatas ptPixelDatas)
 	struct DispOpr *pModule;
 
 	pModule = get_default_module();
-
 	pModule->ShowPage(pModule, ptPixelDatas);
 }
 
@@ -116,8 +101,7 @@ int AllocVideoMem(int iNum)
 
 	PT_VideoMem ptNew;
 
-	/* 确定VideoMem的大小
-	*/
+	/* 确定VideoMem的大小 */
 	GetDispResolution(&iXres, &iYres, &iBpp);
 	iVMSize = iXres * iYres * iBpp / 8;
 	iLineBytes = iXres * iBpp / 8;
@@ -158,9 +142,7 @@ int AllocVideoMem(int iNum)
 	/* 放入链表 */
 	list_add(&ptNew->list, &videomem_list);
 
-	/*
-	 * 分配用于缓存的VideoMem
-	 */
+	/* 分配用于缓存的VideoMem */
 	for (i = 0; i < iNum; i++)
 	{
 		/* 分配T_VideoMem结构体本身和"跟framebuffer同样大小的缓存" */

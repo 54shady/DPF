@@ -24,25 +24,11 @@ int input_register(struct list_head *list)
 int InputInit(void)
 {
 	int iError;
-	printf("Display subsystem init\n");
+	printf("Subsystem Input init\n");
 	/* 调用个模块初始化函数 */
 	iError = TouchScreenInit();
 
 	return iError;
-}
-
-struct InputOpr *input_get_module(const char *name)
-{
-	struct InputOpr *pModule;
-
-	list_for_each_entry(pModule, &input_list, list)
-	{
-		if (!strcmp(name, pModule->name))
-			return pModule;
-	}
-
-	printf("%s, %d, no sub module ERROR\n", __FUNCTION__, __LINE__);
-	return NULL;
 }
 
 /* 调用各个子模块的初始化函数 */

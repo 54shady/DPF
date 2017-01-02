@@ -174,4 +174,3 @@ int BMPParserInit(void)
 {
 	return RegisterPicFileParser(&g_tBMPParser.list);
 }
-

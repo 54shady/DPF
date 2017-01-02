@@ -122,7 +122,6 @@ static int CovertOneLine(int iWidth, int iSrcBpp, int iDstBpp, unsigned char *pu
 	return 0;
 }
 
-
 static int GetPixelDatasFrmJPG(PT_FileMap ptFileMap, PT_PixelDatas ptPixelDatas)
 {
 	struct jpeg_decompress_struct tDInfo;
@@ -219,5 +218,3 @@ int JPGParserInit(void)
 {
 	return RegisterPicFileParser(&g_tJPGParser.list);
 }
-
-

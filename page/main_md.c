@@ -153,8 +153,7 @@ static void MainPageRun(PT_PageParams ptParentPageParams)
 					{
 						case 0: /* 浏览按钮 */
 						{
-							Page("browse")->Run(&tPageParams);
-
+							RunPage("browse", &tPageParams);
 							/* 从设置页面返回后显示当首的主页面 */
 							ShowMainPage(&g_tMainPageLayout);
 
@@ -166,7 +165,7 @@ static void MainPageRun(PT_PageParams ptParentPageParams)
                              * 这样就会使用默认的播放目录
                              */
                             tPageParams.strCurPictureFile[0] = '\0';
-							Page("auto")->Run(&tPageParams);
+							RunPage("auto", &tPageParams);
 
 							/* 从设置页面返回后显示当首的主页面 */
 							ShowMainPage(&g_tMainPageLayout);
@@ -175,7 +174,7 @@ static void MainPageRun(PT_PageParams ptParentPageParams)
 						}
 						case 2: /* 设置按钮 */
 						{
-							Page("setting")->Run(&tPageParams);
+							RunPage("setting", &tPageParams);
 
 							/* 从设置页面返回后显示当首的主页面 */
 							ShowMainPage(&g_tMainPageLayout);
@@ -220,4 +219,3 @@ int MainPageInit(void)
 {
 	return RegisterPageAction(&g_tMainPageAction.list);
 }
-
