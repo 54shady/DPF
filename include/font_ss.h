@@ -17,23 +17,19 @@ typedef struct FontBitMap {
 	unsigned char *pucBuffer;  /* 存有字符的位图数据 */
 }T_FontBitMap, *PT_FontBitMap;
 
-typedef struct FontOpr {
+struct FontOpr {
 	char *name;             /* 字体模块的名字 */
 	int (*FontInit)(char *pcFontFile, unsigned int dwFontSize);  /* 字体模块的初始化函数 */
 	int (*GetFontBitmap)(unsigned int dwCode, PT_FontBitMap ptFontBitMap);  /* 根据编码值获得字符的位图 */
 	void (*SetFontSize)(unsigned int dwFontSize);   /* 设置字体尺寸(单位:象素) */
-	//struct FontOpr *ptNext;  /* 链表 */
 	struct list_head list;
-}T_FontOpr, *PT_FontOpr;
+};
 
 int RegisterFontOpr(struct list_head *list);
 int FontsInit(void);
-int ASCIIInit(void);
-int GBKInit(void);
 int FreeTypeInit(void);
-PT_FontOpr GetFontOpr(char *pcName);
+struct FontOpr * GetFontOpr(char *pcName);
 void SetFontSize(unsigned int dwFontSize);
-//unsigned int GetFontSize(void);
 int GetFontBitmap(unsigned int dwCode, PT_FontBitMap ptFontBitMap);
 int SetFontsDetail(char *pcFontsName, char *pcFontsFile, unsigned int dwFontSize);
 void ShowFontModules(void);

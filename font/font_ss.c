@@ -6,8 +6,6 @@
 
 /* 将该子系统里所有模块都装入链表 */
 LIST_HEAD(font_list);
-//static PT_FontOpr g_ptFontOprHead = NULL;
-//static int g_dwFontSize;
 
 int RegisterFontOpr(struct list_head *list)
 {
@@ -15,7 +13,7 @@ int RegisterFontOpr(struct list_head *list)
 	return 0;
 }
 
-PT_FontOpr GetFontOpr(char *name)
+struct FontOpr * GetFontOpr(char *name)
 {
 	struct FontOpr *pModule;
 
@@ -28,14 +26,6 @@ PT_FontOpr GetFontOpr(char *name)
 	printf("%s, %d, no sub module ERROR\n", __FUNCTION__, __LINE__);
 	return NULL;
 }
-
-
-#if 0
-unsigned int GetFontSize(void)
-{
-	return g_dwFontSize;
-}
-#endif
 
 int GetFontBitmap(unsigned int dwCode, PT_FontBitMap ptFontBitMap)
 {
@@ -55,7 +45,7 @@ int GetFontBitmap(unsigned int dwCode, PT_FontBitMap ptFontBitMap)
 int SetFontsDetail(char *pcFontsName, char *pcFontsFile, unsigned int dwFontSize)
 {
 	int iError = 0;
-	PT_FontOpr ptFontOpr;
+	struct FontOpr * ptFontOpr;
 
 	ptFontOpr = GetFontOpr(pcFontsName);
 	if (NULL == ptFontOpr)
@@ -63,42 +53,21 @@ int SetFontsDetail(char *pcFontsName, char *pcFontsFile, unsigned int dwFontSize
 		return -1;
 	}
 
-	//g_dwFontSize = dwFontSize;
-
 	iError = ptFontOpr->FontInit(pcFontsFile, dwFontSize);
 
 	return iError;
 }
 
-
 int FontsInit(void)
 {
 	int iError;
-#if 0
 
-	iError = ASCIIInit();
-	if (iError)
-	{
-		printf("ASCIIInit error!\n");
-		return -1;
-	}
-
-	iError = GBKInit();
-	if (iError)
-	{
-		printf("GBKInit error!\n");
-		return -1;
-	}
-#endif
-
-#if 1
 	iError = FreeTypeInit();
 	if (iError)
 	{
 		printf("FreeTypeInit error!\n");
 		return -1;
 	}
-#endif
 
 	return 0;
 }
@@ -113,10 +82,8 @@ void ShowFontModules(void)
 
 void SetFontSize(unsigned int dwFontSize)
 {
-#if 1
 	struct FontOpr *pModule;
 
-	//g_dwFontSize = dwFontSize;
 	list_for_each_entry(pModule, &font_list, list)
 	{
 		if (pModule->SetFontSize)
@@ -125,7 +92,4 @@ void SetFontSize(unsigned int dwFontSize)
 			pModule->SetFontSize(dwFontSize);
 		}
 	}
-#else
-	ShowFontModules();
-#endif
 }

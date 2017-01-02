@@ -7,7 +7,7 @@ static int FreeTypeFontInit(char *pcFontFile, unsigned int dwFontSize);
 static int FreeTypeGetFontBitmap(unsigned int dwCode, PT_FontBitMap ptFontBitMap);
 static void FreeTypeSetFontSize(unsigned int dwFontSize);
 
-static T_FontOpr g_tFreeTypeFontOpr = {
+static struct FontOpr g_tFreeTypeFontOpr = {
 	.name          = "freetype",
 	.FontInit      = FreeTypeFontInit,
 	.GetFontBitmap = FreeTypeGetFontBitmap,
