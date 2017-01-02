@@ -33,7 +33,7 @@ int GBKInit(void);
 int FreeTypeInit(void);
 PT_FontOpr GetFontOpr(char *pcName);
 void SetFontSize(unsigned int dwFontSize);
-unsigned int GetFontSize(void);
+//unsigned int GetFontSize(void);
 int GetFontBitmap(unsigned int dwCode, PT_FontBitMap ptFontBitMap);
 int SetFontsDetail(char *pcFontsName, char *pcFontsFile, unsigned int dwFontSize);
 void ShowFontModules(void);

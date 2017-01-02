@@ -211,7 +211,6 @@ int EncodingInit(void)
 		printf("AsciiEncodingInit error!\n");
 		return -1;
 	}
-#if 0
 
 	iError = Utf16leEncodingInit();
 	if (iError)
@@ -235,9 +234,6 @@ int EncodingInit(void)
 	}
 
 	return 0;
-#else
-	return 0;
-#endif
 }
 
 PT_EncodingOpr Encode(char *pcName)

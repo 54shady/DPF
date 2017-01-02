@@ -42,7 +42,10 @@ PT_PageAction Page(char *name)
 	list_for_each_entry(pModule, &page_list, list)
 	{
 		if (!strcmp(name, pModule->name))
+		{
+			printf("switch to page %s\n", pModule->name);
 			return pModule;
+		}
 	}
 
 	printf("%s, %d, no sub module ERROR\n", __FUNCTION__, __LINE__);

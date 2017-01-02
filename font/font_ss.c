@@ -7,7 +7,7 @@
 /* 将该子系统里所有模块都装入链表 */
 LIST_HEAD(font_list);
 //static PT_FontOpr g_ptFontOprHead = NULL;
-static int g_dwFontSize;
+//static int g_dwFontSize;
 
 int RegisterFontOpr(struct list_head *list)
 {
@@ -30,22 +30,12 @@ PT_FontOpr GetFontOpr(char *name)
 }
 
 
-void SetFontSize(unsigned int dwFontSize)
-{
-	struct FontOpr *pModule;
-
-	g_dwFontSize = dwFontSize;
-	list_for_each_entry(pModule, &font_list, list)
-	{
-		if (pModule->SetFontSize)
-			pModule->SetFontSize(dwFontSize);
-	}
-}
-
+#if 0
 unsigned int GetFontSize(void)
 {
 	return g_dwFontSize;
 }
+#endif
 
 int GetFontBitmap(unsigned int dwCode, PT_FontBitMap ptFontBitMap)
 {
@@ -73,7 +63,7 @@ int SetFontsDetail(char *pcFontsName, char *pcFontsFile, unsigned int dwFontSize
 		return -1;
 	}
 
-	g_dwFontSize = dwFontSize;
+	//g_dwFontSize = dwFontSize;
 
 	iError = ptFontOpr->FontInit(pcFontsFile, dwFontSize);
 
@@ -119,4 +109,23 @@ void ShowFontModules(void)
 
 	list_for_each_entry(pModule, &font_list, list)
 		printf("%s module registered\n", pModule->name);
+}
+
+void SetFontSize(unsigned int dwFontSize)
+{
+#if 1
+	struct FontOpr *pModule;
+
+	//g_dwFontSize = dwFontSize;
+	list_for_each_entry(pModule, &font_list, list)
+	{
+		if (pModule->SetFontSize)
+		{
+			printf("set font %s size %d\n", pModule->name, dwFontSize);
+			pModule->SetFontSize(dwFontSize);
+		}
+	}
+#else
+	ShowFontModules();
+#endif
 }

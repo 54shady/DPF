@@ -43,7 +43,8 @@ int main(int argc, char *argv[])
 
     /* 注册字库模块 */
 	FontsInit();
-	ShowFontModules();
+	//ShowFontModules();
+	SetFontSize(14);
 
     /* 注册编码模块 */
     EncodingInit();

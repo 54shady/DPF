@@ -380,7 +380,7 @@ static int GenerateBrowsePageDirAndFile(int iStartIndex, int iDirContentsNumber,
 
     ClearRectangleInVideoMem(ptPageLayout->iTopLeftX, ptPageLayout->iTopLeftY, ptPageLayout->iBotRightX, ptPageLayout->iBotRightY, ptVideoMem, COLOR_BACKGROUND);
 
-    SetFontSize(atLayout[1].iBotRightY - atLayout[1].iTopLeftY - 5);
+    //SetFontSize(atLayout[1].iBotRightY - atLayout[1].iTopLeftY - 5);
 
     for (i = 0; i < g_iDirFileNumPerCol; i++)
     {
