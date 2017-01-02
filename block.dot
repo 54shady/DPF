@@ -1,0 +1,64 @@
+/*
+ * Digital photo frame version 2 dot file
+ *
+ * Usage(graphviz must be install):
+ * dot -Tpng block.dot -o block.png
+ */
+digraph dpf {
+node [shape="record"]
+/* edge [style="dashed"] */
+
+subgraph cluster_0 {
+	label = "app";
+	main [label = "main.c"];
+}
+
+subgraph cluster_1 {
+	label = "subsystem";
+	node [shape = "Mrecord", style = "filled"];
+	display;
+	encoding;
+	font;
+	input;
+	page;
+	picfmt;
+	utils;
+}
+
+subgraph cluster_2 {
+	label = "modules";
+	node [shape = "Mrecord", color = "skyblue", style = "filled"];
+	fb;
+	bmp;
+	jpg;
+	touchscreen;
+	freetype;
+	utf;
+	ascii;
+	pages;
+}
+
+main -> display;
+main -> font;
+main -> input;
+main -> page;
+main -> picfmt;
+main -> utils;
+main -> encoding;
+
+display -> fb [dir = both];
+
+font -> freetype [dir = both];
+
+picfmt -> bmp [dir = both];
+picfmt -> jpg [dir = both];
+
+input -> touchscreen [dir = both];
+
+encoding -> utf [dir = both];
+encoding -> ascii [dir = both];
+
+page -> pages [dir = both];
+
+"Digital Photo Frame" [shape = "plaintext"];
+}
