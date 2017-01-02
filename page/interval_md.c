@@ -137,13 +137,8 @@ static int IntervalPageGetInputEvent(PT_PageLayout ptPageLayout, PT_InputEvent p
 
 static int GenerateIntervalPageSpecialIcon(int dwNumber, PT_VideoMem ptVideoMem)
 {
-	//unsigned int dwFontSize;
 	char strNumber[3];
 	int iError;
-
-
-	//dwFontSize = g_tIntervalNumberLayout.iBotRightY - g_tIntervalNumberLayout.iTopLeftY;
-	//SetFontSize(dwFontSize);
 
 	/* 显示两位数字: 00~59 */
 	if (dwNumber > 59)
@@ -159,7 +154,6 @@ static int GenerateIntervalPageSpecialIcon(int dwNumber, PT_VideoMem ptVideoMem)
 
 	return iError;
 }
-
 
 static void ShowIntervalPage(PT_PageLayout ptPageLayout)
 {

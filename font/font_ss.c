@@ -13,7 +13,7 @@ int RegisterFontOpr(struct list_head *list)
 	return 0;
 }
 
-struct FontOpr * GetFontOpr(char *name)
+struct FontOpr *GetFontOpr(char *name)
 {
 	struct FontOpr *pModule;
 
@@ -45,7 +45,7 @@ int GetFontBitmap(unsigned int dwCode, PT_FontBitMap ptFontBitMap)
 int SetFontsDetail(char *pcFontsName, char *pcFontsFile, unsigned int dwFontSize)
 {
 	int iError = 0;
-	struct FontOpr * ptFontOpr;
+	struct FontOpr *ptFontOpr;
 
 	ptFontOpr = GetFontOpr(pcFontsName);
 	if (NULL == ptFontOpr)
@@ -78,18 +78,4 @@ void ShowFontModules(void)
 
 	list_for_each_entry(pModule, &font_list, list)
 		printf("%s module registered\n", pModule->name);
-}
-
-void SetFontSize(unsigned int dwFontSize)
-{
-	struct FontOpr *pModule;
-
-	list_for_each_entry(pModule, &font_list, list)
-	{
-		if (pModule->SetFontSize)
-		{
-			printf("set font %s size %d\n", pModule->name, dwFontSize);
-			pModule->SetFontSize(dwFontSize);
-		}
-	}
 }

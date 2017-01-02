@@ -48,7 +48,6 @@ static int FreeTypeFontInit(char *pcFontFile, unsigned int dwFontSize)
 		return -1;
 	}
 
-
 	return 0;
 }
 

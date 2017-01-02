@@ -28,8 +28,7 @@ struct FontOpr {
 int RegisterFontOpr(struct list_head *list);
 int FontsInit(void);
 int FreeTypeInit(void);
-struct FontOpr * GetFontOpr(char *pcName);
-void SetFontSize(unsigned int dwFontSize);
+struct FontOpr *GetFontOpr(char *pcName);
 int GetFontBitmap(unsigned int dwCode, PT_FontBitMap ptFontBitMap);
 int SetFontsDetail(char *pcFontsName, char *pcFontsFile, unsigned int dwFontSize);
 void ShowFontModules(void);

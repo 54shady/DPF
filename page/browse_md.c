@@ -23,7 +23,6 @@
 #define DIR_FILE_ALL_WIDTH    DIR_FILE_NAME_WIDTH
 #define DIR_FILE_ALL_HEIGHT   DIR_FILE_ALL_WIDTH
 
-
 /* browse页面里把显示区域分为"菜单"和"目录和文件"
  * "菜单"就是"up, select,pre_page,next_page"四个可操作的图标
  * "目录和文件"是浏览的内容
@@ -188,7 +187,6 @@ static void  CalcBrowsePageMenusLayout(PT_PageLayout ptPageLayout)
 		i++;
 	}
 }
-
 
 static int CalcBrowsePageDirAndFilesLayout(void)
 {
@@ -369,7 +367,6 @@ static int GetInputPositionInPageLayout(PT_PageLayout ptPageLayout, PT_InputEven
     return -1;
 }
 
-
 static int GenerateBrowsePageDirAndFile(int iStartIndex, int iDirContentsNumber, PT_DirContent *aptDirContents, PT_VideoMem ptVideoMem)
 {
     int iError;
@@ -379,8 +376,6 @@ static int GenerateBrowsePageDirAndFile(int iStartIndex, int iDirContentsNumber,
 	PT_Layout atLayout = ptPageLayout->atLayout;
 
     ClearRectangleInVideoMem(ptPageLayout->iTopLeftX, ptPageLayout->iTopLeftY, ptPageLayout->iBotRightX, ptPageLayout->iBotRightY, ptVideoMem, COLOR_BACKGROUND);
-
-    //SetFontSize(atLayout[1].iBotRightY - atLayout[1].iTopLeftY - 5);
 
     for (i = 0; i < g_iDirFileNumPerCol; i++)
     {
@@ -630,7 +625,6 @@ static void DeSelectDirFileIcon(int iDirFileIndex)
         ReleaseButton(&g_atDirAndFileLayout[iDirFileIndex + 1]);
     }
 }
-
 
 #define DIRFILE_ICON_INDEX_BASE 1000
 static void BrowsePageRun(PT_PageParams ptParentPageParams)
@@ -918,4 +912,3 @@ int BrowsePageInit(void)
 {
 	return RegisterPageAction(&g_tBrowsePageAction.list);
 }
-
