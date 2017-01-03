@@ -1,0 +1,129 @@
+@startuml
+
+main -> SubSystem : DisplayInit
+note right : display_ss.c
+activate SubSystem
+SubSystem -> Module : fb_init
+note right : fb_md.c
+activate Module
+Module -> SubSystem : display_register
+deactivate SubSystem
+deactivate Module
+
+main -> SubSystem : DisplayModuleInit
+note right : display_ss.c
+activate SubSystem
+SubSystem -> Module : DeviceInit
+note right : fb_md.c
+deactivate SubSystem
+activate Module
+Module -> Module : FbDeviceInit
+deactivate Module
+
+main -> SubSystem : InputInit
+note right : input_ss.c
+activate SubSystem
+SubSystem -> Module : TouchScreenInit
+note right : touchscreen_md.c
+activate Module
+Module -> SubSystem : input_register
+deactivate SubSystem
+deactivate Module
+
+main -> SubSystem : AllInputDevicesInit
+note right : input_ss.c
+activate SubSystem
+SubSystem -> Module : DeviceInit
+note right : touchscreen_md.c
+deactivate SubSystem
+activate Module
+Module -> Module : TouchScreenDevInit
+Module -> SubSystem : ret = 0
+SubSystem -> SubSystem : pthread_create
+deactivate Module
+
+main -> SubSystem : FontsInit
+note right : font_ss.c
+activate SubSystem
+SubSystem -> Module : FreeTypeInit
+note right : freetype_md.c
+activate Module
+Module -> SubSystem : RegisterFontOpr
+deactivate SubSystem
+deactivate Module
+
+main -> SubSystem : EncodingInit
+note right : encondig_ss.c
+activate SubSystem
+activate Module
+SubSystem -> Module : AsciiEncodingInit
+note right : ascii_md.c
+Module -> SubSystem : AddFontOprForEncoding
+SubSystem -> Module : Utf16leEncodingInit
+note right : utf16le_md.c
+Module -> SubSystem : AddFontOprForEncoding
+SubSystem -> Module : Utf16beEncodingInit
+note right : utf16be_md.c
+Module -> SubSystem : AddFontOprForEncoding
+SubSystem -> Module : Utf8EncodingInit
+note right : utf8_md.c
+Module -> SubSystem : AddFontOprForEncoding
+deactivate SubSystem
+deactivate Module
+
+main -> SubSystem : SetFontsDetail
+note right : font_ss.c
+activate SubSystem
+SubSystem -> Module : FontInit
+note right : freetype_md.c
+deactivate SubSystem
+activate Module
+Module -> Module : FreeTypeFontInit
+deactivate Module
+
+main -> SubSystem : PicFmtsInit
+note right : picfmt_ss.c
+activate SubSystem
+activate Module
+SubSystem -> Module : BMPParserInit
+note right : bmp_md.c
+Module -> SubSystem : RegisterPicFileParser
+SubSystem -> Module : JPGParserInit
+note right : jpg_md.c
+Module -> SubSystem : RegisterPicFileParser
+deactivate SubSystem
+deactivate Module
+
+main -> SubSystem : PagesInit
+note right : page_ss.c
+activate SubSystem
+activate Module
+SubSystem -> Module : MainPageInit
+note right : main_md.c
+Module -> SubSystem : RegisterPageAction
+SubSystem -> Module :SettingPageInit
+note right : setting_md.c
+Module -> SubSystem : RegisterPageAction
+SubSystem -> Module :IntervalPageInit
+note right : interval_md.c
+Module -> SubSystem : RegisterPageAction
+SubSystem -> Module :BrowsePageInit
+note right : browse_md.c
+Module -> SubSystem : RegisterPageAction
+SubSystem -> Module :AutoPageInit
+note right : auto_md.c
+Module -> SubSystem : RegisterPageAction
+SubSystem -> Module :ManualPageInit
+note right : manual_md.c
+Module -> SubSystem : RegisterPageAction
+deactivate SubSystem
+deactivate Module
+
+main -> SubSystem : RunPage
+note right : page_ss.c
+activate SubSystem
+SubSystem -> Module : MainPageRun
+deactivate SubSystem
+note right : main_md.c
+
+@enduml

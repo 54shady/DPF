@@ -11,6 +11,10 @@
 
 ![block](./block.png)
 
+## 函数调用简图
+
+![sequenceDiagram](./sequenceDiagram.png)
+
 ## Usage
 
 ### FreeType
@@ -50,3 +54,15 @@
 	export TSLIB_PLUGINDIR=/lib/ts
 	export TSLIB_CONSOLEDEVICE=none
 	export TSLIB_FBDEVICE=/dev/fb0
+
+## Misc
+
+### plantuml画函数调用图
+
+安装plantuml
+
+	emerge media-gfx/plantuml
+
+使用
+
+	java -jar /usr/share/plantuml/lib/plantuml.jar sequenceDiagram.txt
