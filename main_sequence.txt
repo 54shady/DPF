@@ -1,0 +1,16 @@
+@startuml
+
+actor User
+participant "MainPage" as MP
+participant "Input Main Thread" as IM
+participant "Input Sub Thread" as IS
+participant "Input Module" as TS
+
+MP -> IM : GetInputEvent(主线程休眠)
+
+User -> TS : 按下触摸屏触发硬件产生数据
+TS -> IS : 返回数据
+IS -> IM : 唤醒主线程
+IM -> MP : 把输入数据发送给主页面
+
+@enduml

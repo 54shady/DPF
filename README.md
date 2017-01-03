@@ -15,6 +15,16 @@
 
 ![sequenceDiagram](./sequenceDiagram.png)
 
+## 主页面输入事件处理
+
+输入子系统会创建子线程用接受底层驱动输入数据
+
+主线程在没有数据时休眠
+
+在子系统接收到数据后会唤醒主线程并将数据传递给主线程
+
+![main page](./main_sequence.png)
+
 ## Usage
 
 ### FreeType
