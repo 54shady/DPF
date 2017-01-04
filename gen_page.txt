@@ -1,0 +1,17 @@
+@startuml
+
+participant "PageSubSystem" as PS
+participant "Render" as RD
+participant "File" as FL
+participant "BMP Parser" as BP
+participant "Zoom" as ZM
+participant "Merge" as MG
+
+PS -> PS : [01]GeneratePage(ptVideoMem)
+PS -> RD : [02]GetPixelDatasForIcon
+RD -> FL : [03]MapFile(把图标文件映射成文件来操作)
+RD -> BP : [04]GetPixelDatasFrmBMP(获取BMP文件像素数据)
+PS -> ZM : [05]PicZoom(将获得的图片数据进行缩放)
+PS -> MG : [06]PicMerge(将缩放后的数据进行合并放入缓冲区ptVideoMem)
+
+@enduml
